@@ -18,6 +18,7 @@ export default {
     Even when routes use the same component, treat them
     as distinct and create the component again.
     -->
+    <b-button>Button</b-button>
     <RouterView :key="$route.fullPath" />
   </div>
 </template>
@@ -34,6 +35,9 @@ export default {
 // https://github.com/rstacruz/nprogress
 @import '~nprogress/nprogress.css';
 
+// Parcel example
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';
 // Design variables and utilities from src/design.
 @import '@design';
 
