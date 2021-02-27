@@ -1,7 +1,6 @@
 import router from '@router'
 import store from '@state/store'
 import App from './app.vue'
-import axios from 'axios'
 import Vue from 'vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Globally register all `_base`-prefixed components
@@ -11,8 +10,6 @@ import '@components/_globals'
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-// Define axios as http globally
-Vue.prototype.$http = axios
 // Don't warn about using the dev version of Vue in development.
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
