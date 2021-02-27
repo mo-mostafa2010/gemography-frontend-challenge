@@ -10,6 +10,7 @@ export default {
   },
   components: { Layout },
   computed: {
+    // caluclated date 30 days ago from current date and formated to yyyy-MM-dd
     calculatedDate() {
       return formatDate(
         subDate(new Date(), {
