@@ -18,9 +18,13 @@ module.exports = {
     'no-debugger': process.env.PRE_COMMIT ? 'error' : 'off',
     // Only allow `console.log` in development
     'no-console': process.env.PRE_COMMIT
-      ? ['error', { allow: ['warn', 'error'] }]
+      ? [
+          'error',
+          {
+            allow: ['warn', 'error'],
+          },
+        ]
       : 'off',
-    'import/no-relative-parent-imports': 'error',
     'import/order': 'error',
     'vue/array-bracket-spacing': 'error',
     'vue/arrow-spacing': 'error',
@@ -68,7 +72,9 @@ module.exports = {
         parser: 'babel-eslint',
         sourceType: 'module',
       },
-      env: { jest: true },
+      env: {
+        jest: true,
+      },
       globals: {
         mount: false,
         shallowMount: false,
