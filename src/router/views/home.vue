@@ -3,13 +3,14 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main.vue'
 import formatDate from '@src/utils/format-date'
 import subDate from '@src/utils/sub-date'
+import repoCards from '@src/components/repo-cards.vue'
 import axios from 'axios'
 export default {
   page: {
     title: 'Trending Repos',
     meta: [{ name: 'description', content: appConfig.description }],
   },
-  components: { Layout },
+  components: { Layout, repoCards },
   data() {
     return {
       repos: [],
@@ -30,6 +31,7 @@ export default {
   },
   methods: {
     fetchRepos() {
+      // get all github repos in the last 30 days
       axios
         .get(
           `https://api.github.com/search/repositories?q=created:>${this.calculatedDate}&sort=stars&order=desc`
@@ -47,6 +49,7 @@ export default {
 
 <template>
   <Layout>
-    <h1>Trending Repos</h1>
+    <h3>Trending Repos</h3>
+    <repoCards v-for="repo in repos" :key="repo.id" :repo="repo" />
   </Layout>
 </template>

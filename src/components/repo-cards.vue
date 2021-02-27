@@ -1,14 +1,44 @@
+<script>
+import formatDateRelative from '@src/utils/format-date-relative'
+export default {
+  props: {
+    repo: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    calculateRelativeDate(date) {
+      return formatDateRelative(new Date(date))
+    },
+  },
+}
+</script>
+
 <template>
   <b-card
-    img-src="https://placekitten.com/300/300"
+    :img-src="repo.owner.avatar_url"
     img-alt="Card image"
+    :title="repo.name"
+    img-width="150px"
     img-left
-    class="mb-3"
+    class="mb-4 p4"
   >
     <b-card-text>
-      Some quick example text to build on the card and make up the bulk of the
-      card's content.
+      {{ repo.description }}
     </b-card-text>
+    <BaseChip
+      key-name="Stars"
+      variant="primary"
+      pill
+      class="mr-2"
+      :value="repo.stargazers_count"
+    />
+    <BaseChip key-name="Open Issues" :value="repo.open_issues_count" />
+    <span>
+      Submitted {{ calculateRelativeDate(repo.created_at) }} By:
+      {{ repo.owner.login }}
+    </span>
   </b-card>
 </template>
 
