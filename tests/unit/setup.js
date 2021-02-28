@@ -67,11 +67,6 @@ Object.defineProperty(window, 'localStorage', {
     }
   })(),
 })
-
-// ===
-// Console handlers
-// ===
-
 // Make console.warn throw, so that Jest tests fail
 const warn = console.warn
 console.warn = function (message) {
