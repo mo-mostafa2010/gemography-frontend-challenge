@@ -14,6 +14,8 @@ export default {
   data() {
     return {
       repos: [],
+      currentPage: 1,
+      rows: null,
     }
   },
   computed: {
@@ -26,7 +28,14 @@ export default {
       )
     },
   },
+  watch: {
+    // Fetch Repo Data at every change of  a page
+    currentPage() {
+      this.fetchRepos()
+    },
+  },
   created() {
+    // Fetch Repo Data at compnent creation
     this.fetchRepos()
   },
   methods: {
@@ -34,13 +43,19 @@ export default {
       // get all github repos in the last 30 days
       axios
         .get(
-          `https://api.github.com/search/repositories?q=created:>${this.calculatedDate}&sort=stars&order=desc`
+          `https://api.github.com/search/repositories?q=created:>${this.calculatedDate}&sort=stars&page=${this.currentPage}`
         )
         .then((result) => {
+          // Set repos Array from response items
           this.repos = result.data.items
+
+          // As github api only provide the first 1000 items,
+          // Use this workaround to check if the current data is greater than 1000 or not
+          this.rows = Math.min(result.data.total_count, 1000)
         })
-        .catch((err) => {
-          window.alert('err', err)
+        .catch((err, message) => {
+          // Display the erroe message on alert for user
+          window.alert(err.message)
         })
     },
   },
@@ -50,6 +65,27 @@ export default {
 <template>
   <Layout>
     <h3>Trending Repos</h3>
+
+    <!-- Top Pagination -->
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="30"
+      align="center"
+    />
+    <!-- End of Top Pagination  -->
+
+    <!-- Repo Cards -->
     <repoCards v-for="repo in repos" :key="repo.id" :repo="repo" />
+    <!-- End of Repo Cards -->
+
+    <!-- Bottom Pagination -->
+    <b-pagination
+      v-model="currentPage"
+      :per-page="30"
+      :total-rows="rows"
+      align="center"
+    />
+    <!-- End of Bottom Pagination -->
   </Layout>
 </template>
